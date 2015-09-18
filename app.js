@@ -5,8 +5,15 @@ $(document).ready(function() {
 		// Use the .preventDeafault() method onthe passed event object to stop form from submitting
 		// Allows user to stay on the current page
 		event.preventDefault();
-		// Gets the value inside the text filed an stores it in searchValue var
-		var $searchFieldValue = $('#search').val();
+		// Gets the element with #search and stores it in $searchFieldValue
+		// Gets the element with #submit and store it in $submitSearchButton
+		var $searchFieldValue = $('#search'),
+				$submitSearchButton = $("#submit");
+
+		// Disables input field
+		$searchFieldValue.prop('disabled', true);
+		// Disables form button then changes the value
+		$submitSearchButton.attr('disabled', true).val('Searching...');
 
 		// getJSON() method takes 3 parameters
 
@@ -18,8 +25,8 @@ $(document).ready(function() {
 				// Specifying what kind of what properties and values I'm looking for
 				flickerData = {
 					// The tags property is a Flickr query string parameter
-					// Allow flickr server to find a photo that matches the value of the $searchFieldValue var
-					tags: $searchFieldValue,
+					// Allow flickr server to find a photo that matches the value of the $searchFieldValue
+					tags: $searchFieldValue.val(),
 					// The format is another Flickr query string parameter
 					// Allow to request my prefered data format ex(JSON or XML)
 					format: 'json'
@@ -55,6 +62,10 @@ $(document).ready(function() {
 			});
 			thumbnailTemplate += '</ul>';
 			$('#photos').html(thumbnailTemplate);
+			// Enables input field
+			$searchFieldValue.prop('disabled', false);
+			// Enables form button then changes the value
+			$submitSearchButton.attr('disabled', false).val('Search');
 		});
 	});
 });

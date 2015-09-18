@@ -1,11 +1,12 @@
 $(document).ready(function() {
-	// Selects all button elements
-	// Use the click() event method to fire off events events
-	$('button').click(function() {
-		// Removes the css .selected for all button elements when clicked
-		$('button').removeClass('selected');
-		// Then adds the css .sleceted to the button element that was clicked
-		$(this).addClass('selected');
+	// Selects the form element
+	// Use the .submit() event method to fire off the func(event) when form is submitted
+	$('form').submit(function(event) {
+		// Use the .preventDeafault() method onthe passed event object to stop form from submitting
+		// Allows user to stay on the current page
+		event.preventDefault();
+		// Gets the value inside the text filed an stores it in searchValue var
+		var $searchFieldValue = $('#search').val();
 
 		// getJSON() method takes 3 parameters
 
@@ -14,13 +15,11 @@ $(document).ready(function() {
 		var flickerApiUrl = 'https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?',
 
 		// 2) data request
-				// Gets the inner text value of the button that was clicked
-				animal = $(this).text(),
 				// Specifying what kind of what properties and values I'm looking for
 				flickerData = {
 					// The tags property is a Flickr query string parameter
-					// Allow flickr server to find a photo that matches the value of the aniamls var
-					tags: animal,
+					// Allow flickr server to find a photo that matches the value of the $searchFieldValue var
+					tags: $searchFieldValue,
 					// The format is another Flickr query string parameter
 					// Allow to request my prefered data format ex(JSON or XML)
 					format: 'json'
